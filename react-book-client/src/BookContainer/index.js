@@ -40,7 +40,7 @@ class BookContainer extends Component {
     // .bind arguments take presidence over every other argument
     e.preventDefault();
 
-    book.year = parseInt(book.year);
+
 
     try {
 
@@ -114,7 +114,7 @@ class BookContainer extends Component {
         body: JSON.stringify({
           title: this.state.bookToEdit.title,
           author: this.state.bookToEdit.author,
-          year: parseInt(this.state.bookToEdit.year)
+          year: this.state.bookToEdit.year
         })
       });
 
