@@ -3,7 +3,7 @@ import CreateBook from '../CreateBook';
 import BookList from '../BookList';
 import EditBook from '../EditBook';
 import { Grid } from 'semantic-ui-react';
-import getCookie from 'js-cookie';
+
 
 
 class BookContainer extends Component {
@@ -22,13 +22,8 @@ class BookContainer extends Component {
   }
   getBooks = async () => {
     // Where We will make our fetch call to get all the movies
-    const csrfCookie = getCookie('csrftoken');
-    const books = await fetch('http://localhost:8000/books', {
-      credentials: 'include',
-      headers: {
-        'X-CSRFToken': csrfCookie
-      }
-    });
+
+    const books = await fetch('http://localhost:8000/books');
     const booksParsedJSON = await books.json();
     return booksParsedJSON
   }
@@ -48,16 +43,14 @@ class BookContainer extends Component {
     book.year = parseInt(book.year);
 
     try {
-      const csrfCookie = getCookie('csrftoken');
+
       // We have to send JSON
       // createdMovie variable will store the response from the express API
       const createdBook = await fetch('http://localhost:8000/books/', {
         method: 'POST',
-        credentials: 'include',
         body: JSON.stringify(book),
         headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrfCookie
+          'Content-Type': 'application/json'
         }
       });
 
@@ -82,15 +75,9 @@ class BookContainer extends Component {
   }
   deleteBook = async (id) => {
 
-    const csrfCookie = getCookie('csrftoken');
-    console.log(typeof csrfCookie, csrfCookie)
+
     const deleteBookResponse = await fetch('http://localhost:8000/books/' + id + '/', {
-                                              headers: {
-                                                  'X-CSRFToken': csrfCookie,
-                                                  'Content-Type': 'application/json'
-                                                },
                                               method: 'DELETE',
-                                              credentials: 'include'
                                             });
 
     // // This is the parsed response from express
@@ -121,19 +108,14 @@ class BookContainer extends Component {
     e.preventDefault();
     // then update state
     try {
-      const csrfCookie = getCookie('csrftoken');
+
       const editResponse = await fetch('http://localhost:8000/books/' + this.state.bookToEdit.id + '/', {
         method: 'PUT',
         body: JSON.stringify({
           title: this.state.bookToEdit.title,
           author: this.state.bookToEdit.author,
           year: parseInt(this.state.bookToEdit.year)
-        }),
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrfCookie
-        }
+        })
       });
 
       const editResponseParsed = await editResponse.json();
