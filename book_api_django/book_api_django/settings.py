@@ -26,10 +26,17 @@ SECRET_KEY = 'la_345*c)1q9chm(w*_z+f_#0st%3lerqon(id%45y0fl@$sb!'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+# CORS_ORIGIN_ALLOW_ALL = True
+## the app that we are allowing to make request
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3000',
+)
 
-
+## to allow cookies, csrf, and sessions
+CORS_ALLOW_CREDENTIALS = True
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,6 +47,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

@@ -3,7 +3,7 @@ import CreateBook from '../CreateBook';
 import BookList from '../BookList';
 import EditBook from '../EditBook';
 import { Grid } from 'semantic-ui-react';
-
+import getCookie from 'js-cookie';
 
 
 class BookContainer extends Component {
@@ -22,8 +22,13 @@ class BookContainer extends Component {
   }
   getBooks = async () => {
     // Where We will make our fetch call to get all the movies
-
-    const books = await fetch('http://localhost:8000/books');
+    const csrfCookie = getCookie.get('csrftoken');
+    const books = await fetch('http://localhost:8000/books/', {
+      credentials: 'include',
+      headers: {
+        'X-CSRFToken': 'hidfs'
+      }
+    });
     const booksParsedJSON = await books.json();
     return booksParsedJSON
   }
@@ -43,14 +48,16 @@ class BookContainer extends Component {
 
 
     try {
-
+      const csrfCookie = getCookie.get('csrftoken');
       // We have to send JSON
       // createdMovie variable will store the response from the express API
       const createdBook = await fetch('http://localhost:8000/books/', {
         method: 'POST',
         body: JSON.stringify(book),
+        credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrfCookie
         }
       });
 
@@ -75,9 +82,16 @@ class BookContainer extends Component {
   }
   deleteBook = async (id) => {
 
+    const csrfCookie = getCookie.get('csrftoken');
 
+    console.log(csrfCookie, ' this is the cookie')
     const deleteBookResponse = await fetch('http://localhost:8000/books/' + id + '/', {
                                               method: 'DELETE',
+                                              credentials: 'include',
+                                              headers: {
+                                                'Content-Type': 'application/json',
+                                                'X-CSRFToken': csrfCookie
+                                              }
                                             });
 
     // // This is the parsed response from express

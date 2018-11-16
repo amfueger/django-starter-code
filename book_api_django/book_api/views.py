@@ -14,10 +14,13 @@ import json
 class Books(View):
     ## inheriting from the view class
     ## For testing purposes/for development
-    ## were exempting csrf token from our requests
-    @method_decorator(csrf_exempt)
-    def dispatch(self, request, *args, **kwargs):
-        return super(Books, self).dispatch(request, *args, **kwargs)
+    # ## were exempting csrf token from our requests
+    # @method_decorator(csrf_exempt)
+    # def dispatch(self, request, *args, **kwargs):
+    #     return super(Books, self).dispatch(request, *args, **kwargs)
+
+
+
 
     def get(self, request):
         ### .values returns what is called a value
@@ -33,6 +36,7 @@ class Books(View):
             'status': 200,
             'data': book_list
             }, safe=False)
+
 
 
     def post(self, request):
@@ -61,9 +65,10 @@ class Books(View):
 
 class Book_detail(View):
 
-    @method_decorator(csrf_exempt)
-    def dispatch(self, request, *args, **kwargs):
-        return super(Book_detail, self).dispatch(request, *args, **kwargs)
+    # @method_decorator(csrf_exempt)
+    # def dispatch(self, request, *args, **kwargs):
+    #     return super(Book_detail, self).dispatch(request, *args, **kwargs)
+
 
 
     def get(self, request, pk):
