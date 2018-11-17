@@ -32,6 +32,8 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:3000',
 )
 
+
+
 ## to allow cookies, csrf, and sessions
 CORS_ALLOW_CREDENTIALS = True
 

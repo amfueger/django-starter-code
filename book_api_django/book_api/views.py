@@ -3,7 +3,7 @@ from django.http import JsonResponse
 ## views be classes
 from django.views import View
 from .models import Book
-
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 
@@ -21,7 +21,7 @@ class Books(View):
 
 
 
-
+    @method_decorator(ensure_csrf_cookie)
     def get(self, request):
         ### .values returns what is called a value
         ## query set, which basically a list of dictionaries
